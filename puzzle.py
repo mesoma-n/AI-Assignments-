@@ -86,16 +86,27 @@ def _ram_mb(start_ram):
     return used / 1024.0
 
 
-def writeOutput(goal_state, nodes_expanded, max_search_depth, running_time, max_ram_usage):
-    path = _solution_path(goal_state)
-    with open("output.txt", "w") as output:
-        output.write("path to goal: %s\n" % path)
-        output.write("cost of path: %d\n" % len(path))
-        output.write("nodes expanded: %d\n" % nodes_expanded)
-        output.write("search depth: %d\n" % goal_state.cost)
-        output.write("max search depth: %d\n" % max_search_depth)
-        output.write("running time: %.8f\n" % running_time)
-        output.write("max ram usage: %.8f\n" % max_ram_usage)
+def writeOutput(state, nodes_expanded, max_search_depth,running_time, max_ram_usage):
+    path = []
+    current = state
+
+    while current.parent is not None:
+        path.append(current.action)
+        current = current.parent
+
+    path.reverse()
+
+    cost_of_path = state.cost
+    search_depth = state.cost
+
+    with open("output.txt", "w") as f:
+        f.write("path_to_goal: %s\n" % path)
+        f.write("cost_of_path: %d\n" % cost_of_path)
+        f.write("nodes_expanded: %d\n" % nodes_expanded)
+        f.write("search_depth: %d\n" % search_depth)
+        f.write("max_search_depth: %d\n" % max_search_depth)
+        f.write("running_time: %.8f\n" % running_time)
+        f.write("max_ram_usage: %.8f\n" % max_ram_usage)
 
 
 def bfs_search(initial_state):
