@@ -1,0 +1,10 @@
+===== VERSION 1 =====
+Game 1: 512
+Game 2: 512
+Game 3: 2048
+Game 4: 2048
+Game 5: 2048
+
+
+===== VERSION 2 =====
+Game 1: 512
