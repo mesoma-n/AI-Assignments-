@@ -89,13 +89,10 @@ def _ram_mb(start_ram):
 def writeOutput(state, nodes_expanded, max_search_depth,running_time, max_ram_usage):
     path = []
     current = state
-
     while current.parent is not None:
         path.append(current.action)
         current = current.parent
-
     path.reverse()
-
     cost_of_path = state.cost
     search_depth = state.cost
 
@@ -118,7 +115,7 @@ def bfs_search(initial_state):
     explored = set()
     nodes_expanded = 0
     max_search_depth = 0
-
+    
     while not frontier.empty():
         state = frontier.get()
         key = tuple(state.config)
