@@ -1,6 +1,6 @@
 from Grid       import Grid
 from ComputerAI import ComputerAI
-from IntelligentAgent  import IntelligentAgent
+from IntelligentAgent2 import IntelligentAgent
 from Displayer  import Displayer
 
 import time

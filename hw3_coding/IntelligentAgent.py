@@ -21,16 +21,13 @@ class IntelligentAgent(BaseAI):
         board = grid.map
         empty = len(grid.getAvailableCells())
 
-        # Convert tile values to log2 scale
         values = [
             [math.log2(v) if v > 0 else 0 for v in row]
             for row in board
         ]
 
-        # 1. Empty cells
         empty_score = empty * 250
 
-        # 2. Smoothness
         smoothness = 0
 
         for i in range(4):
@@ -48,7 +45,6 @@ class IntelligentAgent(BaseAI):
                         values[i][j] - values[i + 1][j]
                     )
 
-        # 3. Monotonicity
         monotonicity = 0
 
         for row in values:
@@ -79,7 +75,6 @@ class IntelligentAgent(BaseAI):
 
             monotonicity -= min(increasing, decreasing)
 
-        # 4. Largest tile in a corner
         max_tile = max(max(row) for row in board)
 
         corners = [
@@ -155,7 +150,6 @@ class IntelligentAgent(BaseAI):
         best_move = moves[0][0]
         best_score = float("-inf")
 
-        # Explore promising moves first
         moves.sort(
             key=lambda item: self.evaluate(item[1]),
             reverse=True

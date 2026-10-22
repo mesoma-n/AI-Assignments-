@@ -72,7 +72,6 @@ class IntelligentAgent(BaseAI):
         if not moves:
             return self.evaluate(grid)
 
-        # Version 2: order moves at every MAX node, not only at the root.
         moves.sort(key=lambda item: self.evaluate(item[1]), reverse=True)
         alpha = float('-inf')
         for move, new_grid in moves:
@@ -106,23 +105,36 @@ class IntelligentAgent(BaseAI):
 
     def search(self, grid, depth):
         moves = grid.getAvailableMoves()
+        moves.sort(key=lambda item: self.evaluate(item[1]), reverse=True)
+
         best_move = moves[0][0]
         best_score = float('-inf')
-        moves.sort(key=lambda item: self.evaluate(item[1]), reverse=True)
 
         for move, new_grid in moves:
             self.check_time()
             score = self.chance(new_grid, depth - 1)
+
             if score > best_score:
                 best_score = score
                 best_move = move
+
         return best_move
 
     def getMove(self, grid):
-        # Include initial move generation in the CPU-time budget.
         self.deadline = time.process_time() + self.TIME_LIMIT
         moves = grid.getAvailableMoves()
         if not moves:
             return None
 
         best_move = moves[0][0]
+        depth = 1
+
+        while True:
+            try:
+                move = self.search(grid, depth)
+                best_move = move
+                depth += 1
+            except SearchTimeout:
+                break
+
+        return best_move
